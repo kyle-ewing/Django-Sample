@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <title>View Trip</title>
+</head>
+
+<body>
+    <div class='container'>
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <h1>Hello, {{request.session.user}}</h1>
+            <a href="/dashboard" class="btn btn-default">Dashboard</a>
+            <a href="/logout">Logout</a>
+        </nav>
+        <div id='tripinfo'>
+            <h3>{{trip.dest}}</h3>
+            <div id='tripcontent'>
+                <p>Start Date: {{trip.start_date}}</p>
+                <p>End Date: {{trip.end_date}}</p>
+                <p>Created On: {{trip.created_at}}</p>
+                <p>Updated On: {{trip.updated_at}}</p>
+                <p>Plan: {{trip.plan}}</p>
+                <p>Created by: {{trip.created_by.first_name}}</p>
+            </div>
+        </div>
+        <div id='joined'>
+            <h4>People who've joined the trip:</h4>
+            <ul>
+                {% for join in joined %}
+                <li>{{join.first_name}}</li>
+                {% endfor %}
+            </ul>
+
+        </div>
+    </div>
+</body>
+
+</html>

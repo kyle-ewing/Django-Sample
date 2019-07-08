@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <title>Edit Trip</title>
+</head>
+
+<body>
+    <div class='container'>
+        <nav class="navbar navbar-light" style="background-color: #e3f2fd;">
+            <h1>Hello, {{request.session.user}}! Let's edit your trip!</h1>
+            <a href="/logout">Logout</a>
+            <a href="/dashboard" class="btn btn-default">Dashboard</a>
+        </nav>
+        <form action="/process_edit/{{trip.id}}" method="POST">
+            {% csrf_token %}
+            <div class='form-group'>
+                {% if messages %}
+                {% for message in messages %}
+                <p style='color: red;'>{{message}}</p>
+                {% endfor %}
+                {% endif %}
+                <label>Destination</label>
+                <input class='form-control' type="text" name="dest" value="{{trip.dest}}">
+            </div>
+            <div class='form-group'>
+                <label>Start Date</label>
+                <input class='form-control' type="date" name="start" value="{{trip.start_date|date:'Y-m-d'}}">
+            </div>
+            <div class='form-group'>
+
+                <label>End Date</label>
+                <input class='form-control' type="date" name="end" value="{{trip.end_date|date:'Y-m-d'}}">
+            </div>
+            <div class='form-group'>
+                <label>Plan</label>
+                <textarea class='form-control' name="plan">{{trip.plan}}</textarea>
+            </div>
+            <a href='/dashboard'><button type='button' class ="btn btn-danger">Cancel</button></a>
+            <button type="submit" class="btn btn-info">Update</button>
+        </form>
+    </div>
+</body>
+
+</html>

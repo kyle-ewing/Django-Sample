@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'main/css/bootstrap.css' %}">    
+    <script src="{% static 'main/js/bootstrap.min.js' %}"></script>
+    <title>Trip Buddy</title>
+</head>
+
+<body>
+    <div class='container'>
+        <h1>Welcome, let's travel!</h1>
+        <div id='reg'>
+            <h2>Register Here</h2>
+            <form action="/process_reg" method="POST">
+                {% csrf_token %}
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags != 'baddata' %}
+                    <p style='color: red;'>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                <input type="hidden" name='form' value='reg'>
+                <div class="form-group">
+                    <label for="fname">First Name</label>
+                    <input type="text" class="form-control" name="fname" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="lname">Last Name</label>
+                    <input type="text" class="form-control" name="lname" aria-describedby="emailHelp">
+                </div>
+                <input type="hidden" name="reg">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="text" class="form-control" name="email" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password">
+                </div>
+                <div class="form-group">
+                    <label for="confirmpass">Confirm Password</label>
+                    <input type="password" class="form-control" name="confirmpass">
+                </div>
+                <button type="submit" class="btn btn-primary">Register</button>
+            </form>
+        </div>
+        <div id='log'>
+            <h2>Login</h2>
+            <form action="/process_login" method="POST">
+                {% csrf_token %}
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.extra_tags == 'baddata' %}
+                    <p style='color: red;'>{{message}}</p>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                <input type="hidden" name='form' value="login">
+                <div class="form-group">
+                    <label for="email">Email address</label>
+                    <input type="text" class="form-control" name="checkemail" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="checkpass">Password</label>
+                    <input type="password" class="form-control" name="checkpass">
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
